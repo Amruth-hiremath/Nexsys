@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONTACT US | NEXSYS CONTROLS PVT. LTD.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphic Navbar Styles - consistent across pages */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 24px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            position: relative;
+            font-size: 16px;
+            font-weight: 500;
+            color: #1f2937;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #00cc00;
+            bottom: -4px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #00cc00;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: #00cc00;
+            font-weight: 600;
+        }
+
+        /* Hero Section Specific */
+        .hero-section {
+            background: linear-gradient(rgba(0, 204, 0, 0.75), rgba(0, 204, 0, 0.75)),
+                url('https://t3.ftcdn.net/jpg/05/30/96/04/360_F_530960431_c8fPd3HansYvrSJ4fJxZqp9OhjQmYoll.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+
+        /* Background animation for hero */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 10%, transparent 100%);
+            animation: moveGradient 15s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes moveGradient {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            25% {
+                transform: translate(25%, 25%) rotate(90deg);
+            }
+
+            50% {
+                transform: translate(50%, 0) rotate(180deg);
+            }
+
+            75% {
+                transform: translate(25%, -25%) rotate(270deg);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        /* Section Heading */
+        .section-heading {
+            position: relative;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #00cc00;
+            border-radius: 2px;
+        }
+
+        /* Contact Cards */
+        .contact-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-icon {
+            color: #00cc00;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-card:hover .contact-icon {
+            transform: scale(1.1);
+        }
+
+        /* Form Styling */
+        .form-input,
+        .form-textarea {
+            border: 1px solid #d1d5db;
+            /* gray-300 */
+            border-radius: 0.375rem;
+            /* rounded-md */
+            padding: 0.75rem 1rem;
+            width: 100%;
+            font-size: 1rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #00cc00;
+            box-shadow: 0 0 0 3px rgba(0, 204, 0, 0.3);
+        }
+
+        /* Spinner */
+        .spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(0, 204, 0, 0.3);
+            border-radius: 50%;
+            border-top-color: rgba(0, 204, 0, 1);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Success/Error Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-50px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .modal-content i {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .modal-content h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .modal-success i {
+            color: rgba(0, 204, 0, 1);
+        }
+
+        .modal-success h3 {
+            color: rgba(0, 204, 0, 1);
+        }
+
+        .modal-error i {
+            color: #dc2626;
+            /* red-600 */
+        }
+
+        .modal-error h3 {
+            color: #dc2626;
+            /* red-600 */
+        }
+
+        /* Map Container */
+        .map-container {
+            height: 450px;
+            width: 100%;
+            border-radius: 0.75rem;
+            /* rounded-xl */
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            transition: max-height 0.3s ease-out;
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        #mobile-menu.active {
+            max-height: 300px;
+            /* Adjust as needed */
+        }
+    </style>
+</head>
+
+<body class="font-sans bg-gray-50">
+    <nav class="sticky top-0 z-50 bg-white/30 backdrop-blur-md shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center">
+                <img src="https://www.nexsys.in/8b051775e285b342ba38-5c0fcb5c2c7581d170890f8d075b1450.ssl.cf1.rackcdn.com/1593073939113NexsysLogoR.png"
+                    alt="Nexsys Logo" class="h-10">
+            </a>
+
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="AboutUs.html" class="nav-link">About Us</a>
+                <a href="Services.html" class="nav-link">Services</a>
+                <a href="Products.html" class="nav-link">Products</a>
+                <a href="ContactUs.html" class="nav-link active">Contact</a>
+            </div>
+
+            <button id="mobile-menu-button" class="md:hidden text-green-600 hover:text-green-800 focus:outline-none"
+                aria-label="Open main menu">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="md:hidden bg-white/90 backdrop-blur-sm shadow-inner py-2">
+            <div class="flex flex-col items-center space-y-3">
+                <a href="index.html" class="nav-link py-2">Home</a>
+                <a href="AboutUs.html" class="nav-link py-2">About Us</a>
+                <a href="Services.html" class="nav-link py-2">Services</a>
+                <a href="Products.html" class="nav-link py-2">Products</a>
+                <a href="ContactUs.html" class="nav-link py-2">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section text-white py-20 px-4 sm:px-6 lg:px-8" data-aos="fade">
+        <div class="max-w-7xl mx-auto text-center relative z-10">
+            <h1 class="text-3xl md:text-5xl font-bold mb-4" data-aos="fade-down" data-aos-duration="1000">
+                Get in Touch With Us
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-90" data-aos="fade-down" data-aos-delay="200"
+                data-aos-duration="1000">
+                We're here to answer your questions and help with your next project.
+            </p>
+        </div>
+    </section>
+
+
+
+    <main class="container mx-auto px-4 py-8 md:py-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 section-heading text-center mb-10" data-aos="fade-up">
+            Contact Nexsys Controls
+        </h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white p-8 rounded-xl shadow-lg" data-aos="fade-right">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Our Contact Details</h3>
+                <div class="space-y-6">
+                    <div class="flex items-start contact-card p-4 rounded-lg hover:bg-gray-50">
+                        <i class="fas fa-map-marker-alt text-green-600 text-3xl mr-4 flex-shrink-0 contact-icon"></i>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900">Address</h4>
+                            <p class="text-gray-700">No. 123, 7th Main, 3rd Block Jananabharathi Layout,<br>
+                                Kengeri Satellite Town,<br>
+                                Bangalore – 560059, INDIA.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start contact-card p-4 rounded-lg hover:bg-gray-50">
+                        <i class="fas fa-phone-alt text-green-600 text-3xl mr-4 flex-shrink-0 contact-icon"></i>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900">Phone</h4>
+                            <p class="text-gray-700">+91 80 2848 3836<br>+91 99455 88266<br>+91 99860 70502<br></p>
+                        </div>
+                    </div>
+                    <div class="flex items-start contact-card p-4 rounded-lg hover:bg-gray-50">
+                        <i class="fas fa-envelope text-green-600 text-3xl mr-4 flex-shrink-0 contact-icon"></i>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900">Email</h4>
+                            <p class="text-gray-700">info@nexsys.in</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start contact-card p-4 rounded-lg hover:bg-gray-50">
+                        <i class="fas fa-globe text-green-600 text-3xl mr-4 flex-shrink-0 contact-icon"></i>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900">Website</h4>
+                            <p class="text-gray-700">www.nexsys.in</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-xl shadow-lg" data-aos="fade-left">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Send Us a Message</h3>
+                <form id="contact-form" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-gray-700 text-sm font-semibold mb-2">Name</label>
+                        <input type="text" id="name" name="name" class="form-input" placeholder="Your Name" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-gray-700 text-sm font-semibold mb-2">Email</label>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="Your Email"
+                            required>
+                    </div>
+                    <div>
+                        <label for="subject" class="block text-gray-700 text-sm font-semibold mb-2">Subject</label>
+                        <input type="text" id="subject" name="subject" class="form-input"
+                            placeholder="Subject of your message" required>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-gray-700 text-sm font-semibold mb-2">Message</label>
+                        <textarea id="message" name="message" rows="5" class="form-textarea" placeholder="Your Message"
+                            required></textarea>
+                    </div>
+                    <div>
+                        <button type="submit"
+                            class="w-full bg-green-600 text-white py-3 px-6 rounded-full font-semibold text-lg hover:bg-green-700 transition-colors duration-300 flex items-center justify-center">
+                            <span id="submit-text">Send Message</span>
+                            <div id="spinner" class="spinner"></div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <section class="mt-12" data-aos="fade-up">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 section-heading text-center mb-10">
+                Find Us on the Map
+            </h2>
+
+            <!-- Responsive, centered, styled map -->
+            <div class="flex justify-center px-4">
+                <div class="w-full max-w-4xl rounded-xl overflow-hidden shadow-xl border border-gray-200">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.6458521738555!2d77.49380367491759!3d12.930468587381128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3f639532565d%3A0x7bb1db01c8c3dda3!2sNexsys%20Controls%20Pvt.%20Ltd.!5e0!3m2!1sen!2sin!4v1752068914921!5m2!1sen!2sin"
+                        class="w-full h-[500px] sm:h-[600px] border-0" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+
+            <div class="p-4 text-center bg-gray-50 text-sm text-gray-600 mt-4">
+                <p>Use the controls to navigate the map or click for directions.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="success-modal" class="modal-overlay">
+        <div class="modal-content modal-success">
+            <i class="fas fa-check-circle"></i>
+            <h3>Message Sent!</h3>
+            <p>Thank you for contacting us. We will get back to you shortly.</p>
+            <button class="mt-6 bg-green-600 text-white py-2 px-5 rounded-full hover:bg-green-700 transition-colors"
+                onclick="document.getElementById('success-modal').classList.remove('active');">Close</button>
+        </div>
+    </div>
+
+    <div id="error-modal" class="modal-overlay">
+        <div class="modal-content modal-error">
+            <i class="fas fa-times-circle"></i>
+            <h3>Error!</h3>
+            <p>There was an issue sending your message. Please try again later.</p>
+            <button class="mt-6 bg-red-600 text-white py-2 px-5 rounded-full hover:bg-red-700 transition-colors"
+                onclick="document.getElementById('error-modal').classList.remove('active');">Close</button>
+        </div>
+    </div>
+
+
+    <!-- Contact -->
+    <section class="bg-gray-800 text-white py-12 text-white" data-aos="fade-up">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">CONTACT US</h2>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="text-center">
+                    <i
+                        class="fas fa-map-marker-alt text-green-600 text-3xl mb-4 transform hover:scale-110 transition-transform"></i>
+                    <h3 class="text-xl font-semibold mb-3">Address</h3>
+                    <p class="text-blue-100">
+                        NEXSYS CONTROLS PVT. LTD.<br>
+                        No. 123, 7th Main, 3rd Block<br>
+                        Jnanabharathi Layout, Kengeri Satellite Town<br>
+                        Bangalore – 560059, INDIA.
+                    </p>
+                </div>
+
+                <div class="text-center">
+                    <i
+                        class="fas fa-phone-alt text-green-600 text-3xl mb-4 transform hover:scale-110 transition-transform"></i>
+                    <h3 class="text-xl font-semibold mb-3">Phone</h3>
+                    <p class="text-blue-100">
+                        +91 80 2848 3836<br>
+                        +91 80 2848 3976<br>
+                        +91 99860 70502<br>
+                        +91 99455 88266
+                    </p>
+                </div>
+
+                <div class="text-center">
+                    <i
+                        class="fas fa-envelope text-green-600 text-3xl mb-4 transform hover:scale-110 transition-transform"></i>
+                    <h3 class="text-xl font-semibold mb-3">Email</h3>
+                    <a href="mailto:info@nexsys.in" class="text-blue-100 hover:text-white transition">info@nexsys.in</a>
+                </div>
+            </div>
+
+            <div class="flex justify-center space-x-6 mt-12">
+                <a href="https://www.facebook.com/NexsysControlsPvtLtd/"
+                    class="text-white hover:text-[rgba(0,230,0,255)] transition text-2xl">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://in.linkedin.com/company/nexsys-controls-pvt-ltd-bangalore"
+                    class="text-white hover:text-[rgba(0,230,0,255)] transition text-2xl">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="#" class="text-white hover:text-[rgba(0,230,0,255)] transition text-2xl">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="text-white hover:text-[rgba(0,230,0,255)] transition text-2xl">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p>&copy; 2025. Nexsys Controls Pvt Ltd. All Rights Reserved.</p>
+                </div>
+                <div class="flex items-center">
+                    <span class="mr-2">Powered by</span>
+                    <img src="https://www.nexsys.in/www.viamagus.com/static/viamagus/img/ViamagusLogoSmall.png"
+                        alt="viaMagus" class="h-6">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('active');
+        });
+
+        // Contact Form Submission Logic
+        document.getElementById('contact-form').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            const submitButton = this.querySelector('button[type="submit"]');
+            const submitText = document.getElementById('submit-text');
+            const spinner = document.getElementById('spinner');
+            const successModal = document.getElementById('success-modal');
+            const errorModal = document.getElementById('error-modal');
+
+            // Show spinner and disable button
+            submitText.textContent = 'Sending...';
+            spinner.style.display = 'block';
+            submitButton.disabled = true;
+            submitButton.classList.add('opacity-75', 'cursor-not-allowed');
+
+            // Simulate form submission
+            setTimeout(() => {
+                // In a real application, you would send data to a server here (e.g., using fetch API)
+                const isSuccess = Math.random() > 0.3; // Simulate success/failure
+
+                if (isSuccess) {
+                    successModal.classList.add('active');
+                    this.reset(); // Clear form fields on success
+                } else {
+                    errorModal.classList.add('active');
+                }
+
+                // Hide spinner and enable button
+                submitText.textContent = 'Send Message';
+                spinner.style.display = 'none';
+                submitButton.disabled = false;
+                submitButton.classList.remove('opacity-75', 'cursor-not-allowed');
+            }, 2000); // Simulate network request delay
+        });
+
+        // Google Maps Initialization (Placeholder API Key)
+        function initMap() {
+            const nexsysLocation = { lat: 12.9990, lng: 77.7120 }; // Approximate coordinates for KR Puram, Bangalore
+
+            const map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: nexsysLocation,
+                styles: [
+                    // A slightly desaturated map style for better aesthetic integration
+                    {
+                        "featureType": "landscape",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#f5f5f5"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#ffffff"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#787878"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#dadada"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#696969"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.local",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#9b9b9b"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "transit",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#e5e5e5"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "geometry.fill",
+                        "stylers": [
+                            {
+                                "color": "#c7effe"
+                            }
+                        ]
+                    }
+                ]
+            });
+
+            // Add marker
+            new google.maps.Marker({
+                position: nexsysLocation,
+                map: map,
+                title: "Nexsys Controls Pvt. Ltd.",
+                animation: google.maps.Animation.DROP // Drop animation for marker
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRODUCTS | NEXSYS CONTROLS PVT. LTD.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+            /* For background animations */
+            z-index: 0;
+        }
+
+        /* Glassmorphic Navbar Styles - consistent across pages */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 24px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            position: relative;
+            font-size: 16px;
+            font-weight: 500;
+            color: #1f2937;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #00cc00;
+            bottom: -4px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #00cc00;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: #00cc00;
+            font-weight: 600;
+        }
+
+        /* Hero Section Specific */
+        .hero-section {
+            background: linear-gradient(rgba(0, 204, 0, 0.75), rgba(0, 204, 0, 0.75)), url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1283&q=80');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            /* Ensure text is above background animation */
+        }
+
+        /* Background animation for hero */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 10%, transparent 100%);
+            animation: moveGradient 15s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes moveGradient {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            25% {
+                transform: translate(25%, 25%) rotate(90deg);
+            }
+
+            50% {
+                transform: translate(50%, 0) rotate(180deg);
+            }
+
+            75% {
+                transform: translate(25%, -25%) rotate(270deg);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        /* Section Heading */
+        .section-heading {
+            position: relative;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #00cc00;
+            border-radius: 2px;
+        }
+
+        /* Product Section Styling */
+        .product-section {
+            background-color: #f9fafb;
+            /* Light gray background */
+            border-radius: 1rem;
+            /* rounded-xl */
+            padding: 2.5rem;
+            /* p-10 */
+            margin-bottom: 3rem;
+            /* mb-12 */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .product-section:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            border-radius: 0.5rem;
+            /* rounded-lg */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-section:hover .product-image {
+            transform: scale(1.02);
+        }
+
+        .product-list li {
+            position: relative;
+            padding-left: 1.75rem;
+            /* space for custom bullet */
+            margin-bottom: 0.75rem;
+            /* mb-3 */
+        }
+
+        .product-list li::before {
+            content: '\f058';
+            /* FontAwesome check-circle icon */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            /* For solid icon */
+            position: absolute;
+            left: 0;
+            top: 0.1rem;
+            color: #00cc00;
+            /* Green color */
+            font-size: 1.1rem;
+        }
+
+        /* Call to action button */
+        .cta-button {
+            background: linear-gradient(to right, #00cc00, #00e676);
+            box-shadow: 0 0 12px rgba(0, 204, 0, 0.5);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 204, 0, 0.7);
+        }
+
+        /* Product Detail Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(-50px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.2s ease;
+        }
+
+        .close-button:hover {
+            color: #555;
+        }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            transition: max-height 0.3s ease-out;
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        #mobile-menu.active {
+            max-height: 300px;
+            /* Adjust as needed */
+        }
+    </style>
+</head>
+
+<body class="font-sans bg-gray-50">
+    <nav class="sticky top-0 z-50 bg-white/30 backdrop-blur-md shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center">
+                <img src="https://www.nexsys.in/8b051775e285b342ba38-5c0fcb5c2c7581d170890f8d075b1450.ssl.cf1.rackcdn.com/1593073939113NexsysLogoR.png"
+                    alt="Nexsys Logo" class="h-10">
+            </a>
+
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="AboutUs.html" class="nav-link">About Us</a>
+                <a href="Services.html" class="nav-link">Services</a>
+                <a href="Products.html" class="nav-link active">Products</a>
+                <a href="ContactUs.html" class="nav-link">Contact</a>
+            </div>
+
+            <button id="mobile-menu-button" class="md:hidden text-green-600 hover:text-green-800 focus:outline-none"
+                aria-label="Open main menu">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="md:hidden bg-white/90 backdrop-blur-sm shadow-inner py-2">
+            <div class="flex flex-col items-center space-y-3">
+                <a href="index.html" class="nav-link py-2">Home</a>
+                <a href="AboutUs.html" class="nav-link py-2">About Us</a>
+                <a href="Services.html" class="nav-link py-2">Services</a>
+                <a href="Products.html" class="nav-link py-2">Products</a>
+                <a href="ContactUs.html" class="nav-link py-2">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-section text-white py-20 px-4 sm:px-6 lg:px-8" data-aos="fade">
+        <div class="max-w-7xl mx-auto text-center relative z-10">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6" data-aos="fade-down" data-aos-duration="1000">
+                Our Innovative Automotive Solutions
+            </h1>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto opacity-90" data-aos="fade-down" data-aos-delay="200"
+                data-aos-duration="1000">
+                Cutting-edge products designed to meet the specific needs of low-cost to premium vehicles.
+            </p>
+            <a href="#explore-products"
+                class="cta-button px-8 py-4 text-lg text-white font-semibold rounded-full inline-block mt-8"
+                data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
+                Discover Our Products <i class="fas fa-box-open ml-2"></i>
+            </a>
+        </div>
+    </div>
+
+    <div id="explore-products" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <section class="product-section" data-aos="fade-up">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 section-heading text-center mb-10">
+                Automotive Electronics Sub-system Development
+            </h2>
+            <div class="flex flex-col md:flex-row items-center mb-10 gap-8">
+                <div class="md:w-1/2">
+                    <img src="https://www.nexsys.in/8b051775e285b342ba38-5c0fcb5c2c7581d170890f8d075b1450.ssl.cf1.rackcdn.com/1479966949219AutomotiveElectronics.png"
+                        alt="Automotive Electronics" class="product-image w-full h-auto">
+                </div>
+                <div class="md:w-1/2">
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        We have been associated with Automotive OEMs and Suppliers to develop end-to-end solutions
+                        starting from conceptual proposals to production supplies. We have developed various interface
+                        modules for automotive OEMs and Tier 1 suppliers, including multinational companies. Our
+                        expertise
+                        spans the entire electronic product development lifecycle.
+                    </p>
+                    <div class="bg-green-50 p-6 rounded-lg border border-green-100">
+                        <h3 class="font-bold text-green-800 text-xl mb-3">Our Product Range:</h3>
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-gray-800 product-list">
+                            <li>ECU Integrated Modules</li>
+                            <li>ECU Programmers</li>
+                            <li>Start Stop Controller</li>
+                            <li>DC-DC Converter</li>
+                            <li>Buck-Boost Regulator</li>
+                            <li>Body Control Module</li>
+                            <li>Lighting Control Units</li>
+                            <li>Motor Control ECUs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-8">
+                <button
+                    class="view-details-button px-6 py-3 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-colors shadow-md"
+                    data-product-category="Automotive Electronics"
+                    data-product-title="Automotive Electronics Sub-system Development"
+                    data-product-description="Our expertise includes custom ECU design, embedded software, and hardware development for various automotive applications. We ensure robustness, reliability, and compliance with industry standards. We offer solutions for powertrain, body electronics, and infotainment systems."
+                    data-product-image="https://www.nexsys.in/8b051775e285b342ba38-5c0fcb5c2c7581d170890f8d075b1450.ssl.cf1.rackcdn.com/1479966949219AutomotiveElectronics.png"
+                    data-product-list="ECU Integrated Modules, ECU Programmers, Start Stop Controller, DC-DC Converter, Buck-Boost Regulator, Body Control Module, Lighting Control Units, Motor Control ECUs">
+                    View More Details <i class="fas fa-angle-right ml-2"></i>
+                </button>
+            </div>
+        </section>
+
+        <section class="product-section" data-aos="fade-up" data-aos-delay="100">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 section-heading text-center mb-10">
+                Automotive Test Systems & Diagnostic Tools
+            </h2>
+            <div class="flex flex-col md:flex-row-reverse items-center mb-10 gap-8">
+                <div class="md:w-1/2">
+                    <img src="https://www.nexsys.in/8b051775e285b342ba38-5c0fcb5c2c7581d170890f8d075b1450.ssl.cf1.rackcdn.com/1479968063921AutomotiveTesting.png"
+                        alt="Automotive Test Systems" class="product-image w-full h-auto">
+                </div>
+                <div class="md:w-1/2">
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Our extensive experience in test system development ensures that your automotive components and
+                        systems meet stringent quality and performance standards. We develop tailored solutions for both
+                        development and End-of-Line (EOL) testing.
+                    </p>
+                    <div class="bg-green-50 p-6 rounded-lg border border-green-100">
+                        <h3 class="font-bold text-green-800 text-xl mb-3">Key Solutions:</h3>
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-gray-800 product-list">
+                            <li>End-of-Line (EOL) Testers</li>
+                            <li>Automated Test Equipment (ATE)</li>
+                            <li>Functional Test Benches</li>
+                            <li>Vehicle Diagnostic Tools</li>
+                            <li>CAN/LIN/FlexRay Interface Tools</li>
+                            <li>Battery Test Systems</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-8">
+                <button
+                    class="view-details-button px-6 py-3 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-colors shadow-md"
+                    data-product-category="Automotive Test Systems"
+                    data-product-title="Automotive Test Systems & Diagnostic Tools"
+                    data-product-description="We design and build robust test systems for various automotive applications, from component-level validation to full vehicle diagnostics. Our solutions are designed for high accuracy and efficiency, supporting development, production, and after-sales service. This includes hardware-in-the-loop (HIL) systems and custom data acquisition units."
+                    data-product-image="https://www.nexsys.in/8b051775e285b342ba38-5c0fcb5c2c7581d170890f8d075b1450.ssl.cf1.rackcdn.com/1479966961139AutomotiveTestSystem.png"
+                    data-product-list="End-of-Line (EOL) Testers, Automated Test Equipment (ATE), Functional Test Benches, Vehicle Diagnostic Tools, CAN/LIN/FlexRay Interface Tools, Battery Test Systems, Infotainment Test Solutions">
+                    View More Details <i class="fas fa-angle-right ml-2"></i>
+                </button>
+            </div>
+        </section>
+
+        <section class="product-section" data-aos="fade-up" data-aos-delay="200">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 section-heading text-center mb-10">
+                Mechanical Design & Analysis
+            </h2>
+            <div class="flex flex-col md:flex-row items-center mb-10 gap-8">
+                <div class="md:w-1/2">
+                    <img src="https://www.nexsys.in/8b051775e285b342ba38-5c0fcb5c2c7581d170890f8d075b1450.ssl.cf1.rackcdn.com/1479968458156SSR.jpeg"
+                        alt="Mechanical Design" class="product-image w-full h-auto">
+                </div>
+                <div class="md:w-1/2">
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        We offer comprehensive mechanical design and analysis services, translating concepts into
+                        production-ready designs. Our team utilizes advanced CAD and simulation tools to ensure optimal
+                        performance, durability, and manufacturability.
+                    </p>
+                    <div class="bg-green-50 p-6 rounded-lg border border-green-100">
+                        <h3 class="font-bold text-green-800 text-xl mb-3">Our Services Include:</h3>
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-gray-800 product-list">
+                            <li>3D Modeling & CAD</li>
+                            <li>FEA (Finite Element Analysis)</li>
+                            <li>Design for Manufacturability (DFM)</li>
+                            <li>Prototyping Support</li>
+                            <li>Fixture & Jig Design</li>
+                            <li>Ergonomic Design</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-8">
+                <button
+                    class="view-details-button px-6 py-3 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-colors shadow-md"
+                    data-product-category="Mechanical Design & Analysis"
+                    data-product-title="Mechanical Design & Analysis"
+                    data-product-description="Our mechanical engineering team provides end-to-end design services, from initial concept sketches to detailed manufacturing drawings. We leverage advanced simulation tools to optimize designs for strength, weight, and cost, ensuring robust and efficient mechanical systems. This includes thermal analysis and fluid dynamics."
+                    data-product-image="https://www.nexsys.in/8b051775e285b342ba38-5c0fcb5c2c7581d170890f8d075b1450.ssl.cf1.rackcdn.com/1479966970172MechanicalDesign.png"
+                    data-product-list="3D Modeling & CAD, FEA (Finite Element Analysis), Design for Manufacturability (DFM), Prototyping Support, Fixture & Jig Design, Ergonomic Design, Thermal Analysis, CFD Simulations">
+                    View More Details <i class="fas fa-angle-right ml-2"></i>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <div id="product-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button" id="close-modal">&times;</span>
+            <h3 id="modal-category" class="text-green-600 text-lg mb-2"></h3>
+            <h2 id="modal-title" class="text-3xl font-bold text-gray-800 mb-4"></h2>
+            <img id="modal-image" src="" alt="Product Image" class="w-full h-64 object-cover rounded-lg mb-6 shadow-md">
+            <p id="modal-description" class="text-gray-700 leading-relaxed mb-6"></p>
+            <div class="bg-gray-100 p-4 rounded-lg border border-gray-200">
+                <h4 class="font-bold text-gray-800 text-lg mb-2">Key Features/Products:</h4>
+                <ul id="modal-product-list"
+                    class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-gray-700 product-list">
+                </ul>
+            </div>
+            <div class="text-center mt-6">
+                <a href="ContactUs.html"
+                    class="cta-button px-6 py-3 text-white font-semibold rounded-full inline-block">
+                    Inquire Now <i class="fas fa-paper-plane ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Contact -->
+    <section class="bg-gray-800 text-white py-12 text-white" data-aos="fade-up">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">CONTACT US</h2>
+    
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="text-center">
+                    <i
+                        class="fas fa-map-marker-alt text-green-600 text-3xl mb-4 transform hover:scale-110 transition-transform"></i>
+                    <h3 class="text-xl font-semibold mb-3">Address</h3>
+                    <p class="text-blue-100">
+                        NEXSYS CONTROLS PVT. LTD.<br>
+                        No. 123, 7th Main, 3rd Block<br>
+                        Jnanabharathi Layout, Kengeri Satellite Town<br>
+                        Bangalore – 560059, INDIA.
+                    </p>
+                </div>
+    
+                <div class="text-center">
+                    <i
+                        class="fas fa-phone-alt text-green-600 text-3xl mb-4 transform hover:scale-110 transition-transform"></i>
+                    <h3 class="text-xl font-semibold mb-3">Phone</h3>
+                    <p class="text-blue-100">
+                        +91 80 2848 3836<br>
+                        +91 80 2848 3976<br>
+                        +91 99860 70502<br>
+                        +91 99455 88266
+                    </p>
+                </div>
+    
+                <div class="text-center">
+                    <i
+                        class="fas fa-envelope text-green-600 text-3xl mb-4 transform hover:scale-110 transition-transform"></i>
+                    <h3 class="text-xl font-semibold mb-3">Email</h3>
+                    <a href="mailto:info@nexsys.in" class="text-blue-100 hover:text-white transition">info@nexsys.in</a>
+                </div>
+            </div>
+    
+            <div class="flex justify-center space-x-6 mt-12">
+                <a href="https://www.facebook.com/NexsysControlsPvtLtd/"
+                    class="text-white hover:text-[rgba(0,230,0,255)] transition text-2xl">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://in.linkedin.com/company/nexsys-controls-pvt-ltd-bangalore"
+                    class="text-white hover:text-[rgba(0,230,0,255)] transition text-2xl">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="#" class="text-white hover:text-[rgba(0,230,0,255)] transition text-2xl">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="text-white hover:text-[rgba(0,230,0,255)] transition text-2xl">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p>&copy; 2025. Nexsys Controls Pvt Ltd. All Rights Reserved.</p>
+                </div>
+                <div class="flex items-center">
+                    <span class="mr-2">Powered by</span>
+                    <img src="https://www.nexsys.in/www.viamagus.com/static/viamagus/img/ViamagusLogoSmall.png"
+                        alt="viaMagus" class="h-6">
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('active');
+        });
+
+        // Product Detail Modal Logic
+        const productModal = document.getElementById('product-modal');
+        const closeModalButton = productModal.querySelector('.close-button');
+        const modalCategory = document.getElementById('modal-category');
+        const modalTitle = document.getElementById('modal-title');
+        const modalImage = document.getElementById('modal-image');
+        const modalDescription = document.getElementById('modal-description');
+        const modalProductList = document.getElementById('modal-product-list');
+
+        document.querySelectorAll('.view-details-button').forEach(button => {
+            button.addEventListener('click', function () {
+                modalCategory.textContent = this.dataset.productCategory;
+                modalTitle.textContent = this.dataset.productTitle;
+                modalImage.src = this.dataset.productImage;
+                modalDescription.textContent = this.dataset.productDescription;
+
+                modalProductList.innerHTML = ''; // Clear previous list items
+                const items = this.dataset.productList.split(', ');
+                items.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    modalProductList.appendChild(li);
+                });
+
+                productModal.classList.add('active');
+            });
+        });
+
+        closeModalButton.addEventListener('click', function () {
+            productModal.classList.remove('active');
+        });
+
+        productModal.addEventListener('click', function (e) {
+            if (e.target === productModal) {
+                productModal.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+
+</html>
